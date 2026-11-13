@@ -74,7 +74,11 @@ async function playLoop(page) {
       await scan(page, "turn");
       await checkTextScale(page, "turn", "#play-turn");
     }
-    await page.locator("article.card input[type=checkbox]").first().check();
+    // Prefer a "meddle" card: they always leave visible consequences to explain.
+    const meddle = page.locator("article.card.meddle input[type=checkbox]");
+    const pick = (await meddle.count()) > 0 ? meddle.first()
+      : page.locator("article.card input[type=checkbox]").first();
+    await pick.check();
     await page.click("#play-turn");
     await page.waitForSelector("#feed-next", { timeout: 60000 });
     report.turns_played += 1;
