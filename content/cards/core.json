@@ -1,0 +1,390 @@
+[
+  {
+    "id": "active_case_search",
+    "name": "Active case search",
+    "family": "surveillance",
+    "description": "ASHAs go house to house in one village looking for fever with rash. Cases are found sooner and more of them are found.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.surveillance",
+        "where": "target",
+        "amount": 0.6,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "iceberg_phenomenon",
+      "reporting_delay"
+    ]
+  },
+  {
+    "id": "sentinel_reporting",
+    "name": "Strengthen weekly reporting",
+    "family": "surveillance",
+    "description": "Tighten weekly reporting from every sub-centre of one block. A smaller boost than a house-to-house search, but it covers the whole block.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.surveillance",
+        "where": "villages",
+        "amount": 0.3,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "reporting_delay"
+    ]
+  },
+  {
+    "id": "contact_tracing",
+    "name": "Contact tracing",
+    "family": "investigation",
+    "description": "List the contacts of known cases in one village and ask them to stay home while infectious. Works better where people trust the health team; fades over the weeks.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "infectious.tracing",
+        "where": "target",
+        "amount": 0.5,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "contact_tracing"
+    ]
+  },
+  {
+    "id": "outbreak_investigation",
+    "name": "Outbreak investigation",
+    "family": "investigation",
+    "description": "Send a team to verify the diagnosis and build a line list in one village. Pending cases are reported at once, so an outbreak can be recognised early.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "handler",
+        "name": "flush_reports"
+      },
+      {
+        "op": "add_state",
+        "key": "infectious.tracing",
+        "where": "target",
+        "amount": 0.3,
+        "max": 1.0
+      },
+      {
+        "op": "add_state",
+        "key": "systems.surveillance",
+        "where": "target",
+        "amount": 0.4,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "outbreak_investigation",
+      "outbreak_threshold"
+    ]
+  },
+  {
+    "id": "rapid_response_team",
+    "name": "Rapid response team",
+    "family": "investigation",
+    "description": "Deploy the district rapid response team to one village: intensive tracing and case finding together. Expensive.",
+    "cost": {
+      "budget": 4,
+      "action_points": 2
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "infectious.tracing",
+        "where": "target",
+        "amount": 0.7,
+        "max": 1.0
+      },
+      {
+        "op": "add_state",
+        "key": "systems.surveillance",
+        "where": "target",
+        "amount": 0.5,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "contact_tracing",
+      "outbreak_investigation"
+    ]
+  },
+  {
+    "id": "outreach_session",
+    "name": "Extra outreach session",
+    "family": "immunisation",
+    "description": "Hold an extra vaccination session in one village this week. Uses block stock; turnout depends on trust and rumours.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.campaign_doses",
+        "where": "target",
+        "amount": 150
+      }
+    ],
+    "concepts": [
+      "herd_immunity",
+      "vaccine_efficacy_and_coverage"
+    ]
+  },
+  {
+    "id": "mop_up_campaign",
+    "name": "Mop-up campaign",
+    "family": "immunisation",
+    "description": "Run a mop-up vaccination round in every village of one block. Needs plenty of stock and a working cold chain to be worth it.",
+    "cost": {
+      "budget": 5,
+      "action_points": 2
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.campaign_doses",
+        "where": "villages",
+        "amount": 200
+      }
+    ],
+    "concepts": [
+      "herd_immunity",
+      "equity_in_coverage"
+    ]
+  },
+  {
+    "id": "cold_chain_maintenance",
+    "name": "Cold chain maintenance",
+    "family": "staffing",
+    "description": "Repair and service the cold chain point of one block. Fixes a breakdown now and makes one less likely for about four months. It cannot restore vaccine that has already lost potency.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "set_state",
+        "key": "systems.cold_chain_ok",
+        "where": "target",
+        "value": 1
+      },
+      {
+        "op": "add_state",
+        "key": "systems.cold_chain_care",
+        "where": "target",
+        "amount": 16
+      }
+    ],
+    "concepts": [
+      "cold_chain"
+    ]
+  },
+  {
+    "id": "emergency_vaccine_indent",
+    "name": "Emergency vaccine indent",
+    "family": "staffing",
+    "description": "Place an urgent indent for vaccine for one block. The stock arrives in two weeks.",
+    "cost": {
+      "budget": 3,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "schedule_event",
+        "delay": 2,
+        "kind": "systems.stock_arrival",
+        "where": "target",
+        "payload": {
+          "doses": 600
+        }
+      }
+    ],
+    "concepts": [
+      "stock_management"
+    ]
+  },
+  {
+    "id": "community_meeting",
+    "name": "Community meeting",
+    "family": "communication",
+    "description": "Hold a village meeting with the medical officer present. Answers questions, calms rumours and builds some trust.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.trust",
+        "where": "target",
+        "amount": 0.1,
+        "max": 1.0
+      },
+      {
+        "op": "add_state",
+        "key": "systems.rumour",
+        "where": "target",
+        "amount": -0.15,
+        "min": 0.0
+      }
+    ],
+    "concepts": [
+      "community_trust",
+      "rumours_and_hesitancy"
+    ]
+  },
+  {
+    "id": "iec_campaign",
+    "name": "IEC campaign",
+    "family": "communication",
+    "description": "Run an information campaign across one block: wall writing, miking and school talks. A modest effect in every village.",
+    "cost": {
+      "budget": 3,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.rumour",
+        "where": "villages",
+        "amount": -0.1,
+        "min": 0.0
+      },
+      {
+        "op": "add_state",
+        "key": "systems.trust",
+        "where": "villages",
+        "amount": 0.04,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "rumours_and_hesitancy",
+      "aefi_communication"
+    ]
+  },
+  {
+    "id": "engage_local_leaders",
+    "name": "Engage local leaders",
+    "family": "communication",
+    "description": "Win the support of respected people in one village. Trust rises for good, and some of it carries to neighbouring villages.",
+    "cost": {
+      "budget": 2,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.trust_base",
+        "where": "target",
+        "amount": 0.08,
+        "max": 0.95
+      },
+      {
+        "op": "add_state",
+        "key": "systems.trust",
+        "where": "target",
+        "amount": 0.05,
+        "max": 1.0
+      },
+      {
+        "op": "add_state",
+        "key": "systems.trust",
+        "where": "neighbours",
+        "amount": 0.03,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "community_trust"
+    ]
+  },
+  {
+    "id": "hire_contract_staff",
+    "name": "Hire contract staff",
+    "family": "staffing",
+    "description": "Add contract staff to one block for the rest of the year. Workload per person falls, so sessions and reporting hold up under pressure.",
+    "cost": {
+      "budget": 4,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.staff",
+        "where": "target",
+        "amount": 0.4,
+        "max": 3.0
+      }
+    ],
+    "concepts": [
+      "health_worker_workload"
+    ]
+  },
+  {
+    "id": "asha_incentive",
+    "name": "Release ASHA incentives",
+    "family": "staffing",
+    "description": "Clear pending incentive payments in one block. Morale rises and case reporting improves a little.",
+    "cost": {
+      "budget": 3,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "add_state",
+        "key": "systems.morale",
+        "where": "target",
+        "amount": 0.2,
+        "max": 1.0
+      },
+      {
+        "op": "add_state",
+        "key": "systems.surveillance",
+        "where": "villages",
+        "amount": 0.2,
+        "max": 1.0
+      }
+    ],
+    "concepts": [
+      "health_worker_workload",
+      "reporting_delay"
+    ]
+  }
+]

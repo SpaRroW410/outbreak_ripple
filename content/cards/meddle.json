@@ -1,0 +1,148 @@
+[
+  {
+    "id": "reschedule_session",
+    "name": "Reschedule a session",
+    "family": "meddle",
+    "description": "Move the next routine session in one village to this week to match market day. It may draw a crowd, or clash with something you did not know about.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "handler",
+        "name": "reschedule_session"
+      }
+    ],
+    "concepts": [
+      "vaccine_efficacy_and_coverage",
+      "counterfactual_thinking"
+    ]
+  },
+  {
+    "id": "redirect_stock",
+    "name": "Redirect vaccine stock",
+    "family": "meddle",
+    "description": "Send half of one block's vaccine stock to the block that has the least. Helps there; may leave the first block short.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "handler",
+        "name": "redirect_stock"
+      }
+    ],
+    "concepts": [
+      "stock_management",
+      "equity_in_coverage"
+    ]
+  },
+  {
+    "id": "press_note",
+    "name": "Issue a press note",
+    "family": "meddle",
+    "description": "Tell the local press what is happening. Where trust is high this calms people; where it is low the note may be misread and spread alarm.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "district",
+    "effects": [
+      {
+        "op": "handler",
+        "name": "press_note"
+      }
+    ],
+    "concepts": [
+      "rumours_and_hesitancy",
+      "community_trust"
+    ]
+  },
+  {
+    "id": "transfer_mo",
+    "name": "Transfer a medical officer",
+    "family": "meddle",
+    "description": "Move a medical officer out of one block to the block with the heaviest workload. One block gains, the other loses.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "handler",
+        "name": "transfer_mo"
+      }
+    ],
+    "concepts": [
+      "health_worker_workload"
+    ]
+  },
+  {
+    "id": "surprise_inspection",
+    "name": "Surprise inspection",
+    "family": "meddle",
+    "description": "Turn up unannounced at one block's PHC. Discipline may tighten, or the visit may be resented.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "block",
+    "effects": [
+      {
+        "op": "handler",
+        "name": "surprise_inspection"
+      }
+    ],
+    "concepts": [
+      "health_worker_workload",
+      "cold_chain"
+    ]
+  },
+  {
+    "id": "school_closure",
+    "name": "Close the school",
+    "family": "meddle",
+    "description": "Close the school in one village for three weeks. Fewer contacts, but parents worry and talk.",
+    "cost": {
+      "budget": 1,
+      "action_points": 1
+    },
+    "targets": "village",
+    "effects": [
+      {
+        "op": "set_state",
+        "key": "infectious.contact_mult",
+        "where": "target",
+        "value": 0.6
+      },
+      {
+        "op": "schedule_event",
+        "delay": 3,
+        "kind": "infectious.school_reopens",
+        "where": "target",
+        "payload": {}
+      },
+      {
+        "op": "inject_rumour",
+        "where": "target",
+        "amount": 0.1
+      },
+      {
+        "op": "add_state",
+        "key": "systems.trust",
+        "where": "target",
+        "amount": -0.03,
+        "min": 0.0
+      }
+    ],
+    "concepts": [
+      "basic_reproduction_number",
+      "epidemic_curve"
+    ]
+  }
+]
