@@ -1,0 +1,51 @@
+{
+  "id": "default",
+  "title": "Rash fever season",
+  "disease_name": "rash fever",
+  "disease_note": "Rash fever is an invented vaccine-preventable illness. Its numbers are tuned for teaching and are not those of any real disease.",
+  "clock": {"ticks_per_run": 52, "turns": 6},
+  "turn": {
+    "hand_size": 5,
+    "max_cards": 2,
+    "action_points": 3,
+    "budget_start": 8,
+    "budget_per_turn": 4
+  },
+  "world": {
+    "blocks_min": 6,
+    "blocks_max": 12,
+    "villages_min": 3,
+    "villages_max": 8,
+    "village_pop_min": 800,
+    "village_pop_max": 4000,
+    "urban_pop_min": 4000,
+    "urban_pop_max": 12000,
+    "urban_share": 0.2,
+    "district_names": ["Vanrekha", "Meghdhara", "Neelkunj", "Swarnataal"],
+    "name_prefixes": ["Mayur", "Kesar", "Jamun", "Neem", "Imli", "Bargad", "Kamal", "Morni", "Hiran", "Titli", "Koyal", "Saras", "Jugnu", "Badal", "Kiran", "Tara", "Mahua", "Palash", "Semal", "Gulmohar"],
+    "name_suffixes": ["khera", "tola", "gaon", "pura", "garhi", "wadi", "kunj", "dih", "nagla"]
+  },
+  "scoring": {
+    "weight_deaths": 40,
+    "weight_cases": 30,
+    "weight_coverage": 20,
+    "weight_equity": 10,
+    "coverage_full_marks_gain": 0.10,
+    "equity_full_marks_gain": 0.10,
+    "surprise_noise_runs": 5,
+    "chain_event_weights": {
+      "infectious.outbreak_declared": 5,
+      "infectious.death_milestone": 6,
+      "infectious.importation": 4,
+      "infectious.herd_threshold_reached": 4,
+      "infectious.outbreak_over": 3,
+      "infectious.first_report": 2,
+      "systems.stockout": 4,
+      "systems.trust_collapse": 4,
+      "systems.rumour_surge": 3,
+      "systems.staff_overload": 3,
+      "systems.cold_chain_failure": 3,
+      "systems.session_missed": 2
+    }
+  }
+}

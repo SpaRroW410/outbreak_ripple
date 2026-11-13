@@ -1,0 +1,15 @@
+{
+  "world.age_share_0_1": {"value": 0.02, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": "Age structure used to build the fictional district."},
+  "world.age_share_1_5": {"value": 0.08, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": ""},
+  "world.age_share_5_15": {"value": 0.20, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": ""},
+  "world.age_share_15_45": {"value": 0.47, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": ""},
+  "world.age_share_45_60": {"value": 0.14, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": ""},
+  "world.age_share_60_plus": {"value": 0.09, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": ""},
+  "world.pregnant_share": {"value": 0.02, "unit": "share of population", "source": "TODO", "status": "illustrative", "note": "Pregnant women at any time; not used by Phase 2 dynamics."},
+  "world.undernourished_share_under5": {"value": 0.30, "unit": "share of under-fives", "source": "TODO", "status": "illustrative", "note": "Not used by Phase 2 dynamics."},
+  "world.ncd_share_45_plus": {"value": 0.25, "unit": "share of people aged 45+", "source": "TODO", "status": "illustrative", "note": "Diabetic or hypertensive; not used by Phase 2 dynamics."},
+  "world.occupational_exposure_share": {"value": 0.10, "unit": "share of people aged 15-60", "source": "TODO", "status": "illustrative", "note": "Not used by Phase 2 dynamics."},
+  "world.asha_per_1000": {"value": 1.0, "unit": "ASHAs per 1000 population", "source": "TODO", "status": "illustrative", "note": "Staffing norm to be checked by the owner against the official programme norm."},
+  "world.mo_per_phc": {"value": 2, "unit": "medical officers per PHC", "source": "TODO", "status": "illustrative", "note": "Staffing norm to be checked by the owner."},
+  "world.lab_technicians_per_phc": {"value": 1, "unit": "lab technicians per PHC", "source": "TODO", "status": "illustrative", "note": "Staffing norm to be checked by the owner."}
+}
