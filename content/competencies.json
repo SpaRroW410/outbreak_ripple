@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "id": "comp.disease_dynamics",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Dynamics of infectious disease transmission in a community",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.epidemiological_measures",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Measures of disease frequency and severity",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.outbreak_investigation",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Steps in the investigation and control of an outbreak",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.surveillance",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Public health surveillance and reporting",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.immunisation",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Immunisation programme, vaccines and cold chain",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.health_communication",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Health communication, community participation and trust",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.health_management",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Health planning, logistics and human resources",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  },
+  {
+    "id": "comp.causal_reasoning",
+    "code": "TODO",
+    "official_text": "TODO",
+    "working_topic": "Causal reasoning and comparison groups in epidemiology",
+    "verified": false,
+    "note": "Placeholder. The code and wording must be copied from the official NMC CBME document by the owner."
+  }
+]

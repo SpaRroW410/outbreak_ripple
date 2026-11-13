@@ -3,7 +3,10 @@
   "title": "Rash fever season",
   "disease_name": "rash fever",
   "disease_note": "Rash fever is an invented vaccine-preventable illness. Its numbers are tuned for teaching and are not those of any real disease.",
-  "clock": {"ticks_per_run": 52, "turns": 6},
+  "clock": {
+    "ticks_per_run": 52,
+    "turns": 6
+  },
   "turn": {
     "hand_size": 5,
     "max_cards": 2,
@@ -21,17 +24,53 @@
     "urban_pop_min": 4000,
     "urban_pop_max": 12000,
     "urban_share": 0.2,
-    "district_names": ["Vanrekha", "Meghdhara", "Neelkunj", "Swarnataal"],
-    "name_prefixes": ["Mayur", "Kesar", "Jamun", "Neem", "Imli", "Bargad", "Kamal", "Morni", "Hiran", "Titli", "Koyal", "Saras", "Jugnu", "Badal", "Kiran", "Tara", "Mahua", "Palash", "Semal", "Gulmohar"],
-    "name_suffixes": ["khera", "tola", "gaon", "pura", "garhi", "wadi", "kunj", "dih", "nagla"]
+    "district_names": [
+      "Vanrekha",
+      "Meghdhara",
+      "Neelkunj",
+      "Swarnataal"
+    ],
+    "name_prefixes": [
+      "Mayur",
+      "Kesar",
+      "Jamun",
+      "Neem",
+      "Imli",
+      "Bargad",
+      "Kamal",
+      "Morni",
+      "Hiran",
+      "Titli",
+      "Koyal",
+      "Saras",
+      "Jugnu",
+      "Badal",
+      "Kiran",
+      "Tara",
+      "Mahua",
+      "Palash",
+      "Semal",
+      "Gulmohar"
+    ],
+    "name_suffixes": [
+      "khera",
+      "tola",
+      "gaon",
+      "pura",
+      "garhi",
+      "wadi",
+      "kunj",
+      "dih",
+      "nagla"
+    ]
   },
   "scoring": {
     "weight_deaths": 40,
     "weight_cases": 30,
     "weight_coverage": 20,
     "weight_equity": 10,
-    "coverage_full_marks_gain": 0.10,
-    "equity_full_marks_gain": 0.10,
+    "coverage_full_marks_gain": 0.1,
+    "equity_full_marks_gain": 0.1,
     "surprise_noise_runs": 5,
     "chain_event_weights": {
       "infectious.outbreak_declared": 5,
@@ -47,5 +86,10 @@
       "systems.cold_chain_failure": 3,
       "systems.session_missed": 2
     }
-  }
+  },
+  "feed_hidden_kinds": [
+    "core.genesis",
+    "infectious.index_case",
+    "infectious.importation"
+  ]
 }

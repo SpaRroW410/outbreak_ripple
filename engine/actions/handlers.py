@@ -26,11 +26,12 @@ def reschedule_session(ctx: ActionContext) -> None:
         ctx.state.set(sys.SESSION_OFFSET, village, (-ctx.tick - 1) % interval)
         ctx.state.set(sys.SESSION_BOOST, village, 0.2)
         ctx.state.add(sys.TRUST, village, -0.06, 0.0, 1.0)
+        ctx.state.add(sys.RUMOUR, village, 0.2, 0.0, 1.0)
         ctx.emit("actions.session_clash", village, {})
 
 
 def redirect_stock(ctx: ActionContext) -> None:
-    """Send half of this block's vaccine stock to the block with the least stock per person."""
+    """Send two thirds of this block's vaccine stock to the block with the least per person."""
     source = ctx.target
     others = [block.id for block in ctx.district.blocks if block.id != source]
     if not others:
@@ -39,7 +40,7 @@ def redirect_stock(ctx: ActionContext) -> None:
         stock = ctx.state.count(sys.VACCINE_STOCK, block_id)
         return stock / ctx.district.block_population(block_id)
     destination = min(others, key=lambda block_id: (stock_per_person(block_id), block_id))
-    doses = ctx.state.count(sys.VACCINE_STOCK, source) // 2
+    doses = ctx.state.count(sys.VACCINE_STOCK, source) * 2 // 3
     ctx.state.add(sys.VACCINE_STOCK, source, -doses)
     ctx.state.add(sys.VACCINE_STOCK, destination, doses)
     event = ctx.emit("actions.stock_redirected", destination, {"doses": doses})
@@ -57,10 +58,10 @@ def press_note(ctx: ActionContext) -> None:
             ctx.state.add(sys.TRUST, vid, 0.02, 0.0, 1.0)
         ctx.emit("actions.press_note_calms", ctx.target, {})
         return
-    alarmed = sorted(ctx.rng.sample(villages, min(4, len(villages))))
+    alarmed = sorted(ctx.rng.sample(villages, min(5, len(villages))))
     event = ctx.emit("actions.press_note_backfires", ctx.target, {"villages": len(alarmed)})
     for vid in alarmed:
-        ctx.state.add(sys.RUMOUR, vid, 0.3, 0.0, 1.0)
+        ctx.state.add(sys.RUMOUR, vid, 0.45, 0.0, 1.0)
         ctx.state.set(sys.RUMOUR_CAUSE, vid, event.id)
 
 
@@ -87,7 +88,7 @@ def surprise_inspection(ctx: ActionContext) -> None:
         ctx.emit("actions.inspection_tightens", block, {})
     else:
         ctx.state.add(sys.MORALE, block, -0.25, 0.0, 1.0)
-        ctx.state.add(sys.STAFF, block, -0.2, 0.3, 3.0)
+        ctx.state.add(sys.STAFF, block, -0.35, 0.3, 3.0)
         ctx.emit("actions.inspection_resented", block, {})
 
 

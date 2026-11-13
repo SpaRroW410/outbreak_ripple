@@ -22,6 +22,8 @@ def report_cases(ctx: TickContext, village: Village, new_cases: int, rng: Rng) -
     boost = float(state.get_or(k.SYS_SURVEILLANCE, vid, 0.0))
     detection = params["infectious.detection_fraction"] * (0.5 + 0.5 * trust)
     detection = min(1.0, detection + params["infectious.surveillance_detection_gain"] * boost)
+    if int(state.get_or(k.SYS_OVERLOADED, village.block_id, 0)) == 1:
+        detection *= params["infectious.overload_detection_factor"]
     delay = params["infectious.reporting_delay_weeks"]
     delay *= 1.0 - params["infectious.surveillance_delay_reduction"] * boost
     p_report = 1.0 - math.exp(-1.0 / max(0.1, delay))

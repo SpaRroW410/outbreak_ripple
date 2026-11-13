@@ -1,1 +1,238 @@
-[]
+[
+  {
+    "id": "herd_immunity",
+    "title": "Herd immunity",
+    "body": "When enough people in a community are immune, an infectious person meets too few susceptible people to keep the chain of transmission going, so even those who are not immune are protected. For a disease with basic reproduction number R0, in a population that mixes evenly, the share that must be immune is about 1 - 1/R0. In this game each village has its own immune share, so a district with good average coverage can still hold villages below the threshold.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.r0",
+      "infectious.vaccine_efficacy"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "basic_reproduction_number",
+    "title": "R0 and the effective reproduction number",
+    "body": "R0 is the average number of people one case infects in a fully susceptible population. The effective reproduction number R is what happens in the real population: R0 multiplied by the share still susceptible, and reduced further by anything that cuts contacts. An outbreak grows while R is above 1 and fades once R falls below 1. Closing a school or isolating cases lowers R without changing R0.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.r0"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "incubation_and_latency",
+    "title": "Latent and infectious periods",
+    "body": "After infection there is a latent period before a person can infect others, followed by an infectious period. Their lengths set the pace of an outbreak: the time from one generation of cases to the next. Because of this delay, the cases you see today reflect transmission that happened earlier, and the effect of a control measure appears only after a similar delay.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.latent_weeks",
+      "infectious.infectious_weeks"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "epidemic_curve",
+    "title": "Reading an epidemic curve",
+    "body": "An epidemic curve plots new cases against time. A propagated (person-to-person) outbreak usually shows successive waves that rise as each generation infects the next and falls when susceptible people run short or control measures work. The curve of reported cases lags behind the curve of true infections because of the latent period and reporting delay.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.reporting_delay_weeks"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "index_case",
+    "title": "Index case and importation",
+    "body": "The index case is the first case that comes to the attention of the health system; it may not be the first person infected (the primary case). Infections often enter a community from outside. Whether an importation dies out or starts an outbreak depends on how many susceptible people it meets and on chance.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.external_import_probability"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "importation_and_spread",
+    "title": "Spread between communities",
+    "body": "Villages are linked by travel for work, markets, schools and family visits. An outbreak in one village raises the risk in its neighbours, and a village with low immunity next to an affected one is the likeliest place for the next cluster. This is why response to an outbreak looks beyond the affected village.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.travel_rate"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "chance_and_extinction",
+    "title": "Chance in small outbreaks",
+    "body": "Even when R is above 1, a chain of transmission that starts with one or two cases can die out by chance, and when R is a little below 1 a short chain can still occur. With few cases, luck matters; with many, the average takes over. So the same decision can be followed by different results, which is why this game compares your run with a baseline and with other possible runs.",
+    "competency": "comp.disease_dynamics",
+    "parameters": [
+      "infectious.r0"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "reporting_delay",
+    "title": "Reporting delay",
+    "body": "There is always a gap between the onset of illness and the report reaching the people who must act: the patient has to seek care, be recognised and be reported. During that gap the outbreak keeps growing. Shortening the delay through active case search or regular weekly reporting is often worth more than a stronger response that arrives late.",
+    "competency": "comp.surveillance",
+    "parameters": [
+      "infectious.reporting_delay_weeks",
+      "infectious.surveillance_delay_reduction"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "iceberg_phenomenon",
+    "title": "The iceberg of disease",
+    "body": "Reported cases are the visible tip of a larger number: many infected people have mild illness, do not seek care, or are not reported. The reported count therefore underestimates the true burden, and the size of the hidden part depends on how hard you look. In this game you see only reported cases during play; the true numbers appear at the end.",
+    "competency": "comp.surveillance",
+    "parameters": [
+      "infectious.detection_fraction",
+      "infectious.surveillance_detection_gain"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "outbreak_threshold",
+    "title": "Recognising an outbreak",
+    "body": "An outbreak is the occurrence of cases clearly in excess of what is normally expected in that place and time. Recognising one needs a baseline and timely reports; for some diseases a single case is enough to act. The trigger used in this game is an arbitrary teaching value, not an official definition.",
+    "competency": "comp.outbreak_investigation",
+    "parameters": [
+      "infectious.outbreak_threshold_reported"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "outbreak_investigation",
+    "title": "Steps of an outbreak investigation",
+    "body": "An outbreak investigation follows an orderly sequence: verify the diagnosis and confirm that an outbreak exists, define a case and search for cases, describe them by time, place and person, form and test hypotheses, put control measures in place, and communicate the findings. Control measures should not wait for the investigation to finish. A line list of cases is the basic working tool.",
+    "competency": "comp.outbreak_investigation",
+    "parameters": [],
+    "status": "draft"
+  },
+  {
+    "id": "contact_tracing",
+    "title": "Contact tracing and isolation",
+    "body": "Contact tracing means identifying people exposed to a case, following them up through the incubation period, and reducing their contact with others if they fall ill. It works best when cases are found early, when the number of cases is still small, and when the community cooperates. It is labour-intensive, so its effect fades if the effort is not sustained.",
+    "competency": "comp.outbreak_investigation",
+    "parameters": [
+      "infectious.tracing_retained_per_week"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "case_fatality",
+    "title": "Case fatality rate",
+    "body": "The case fatality rate is the proportion of people with a disease who die of it; it measures severity. It is different from the mortality rate, which relates deaths to the whole population. If only severe cases are detected, the case fatality rate calculated from reported cases will be too high.",
+    "competency": "comp.epidemiological_measures",
+    "parameters": [
+      "infectious.case_fatality"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "attack_rate",
+    "title": "Attack rate",
+    "body": "The attack rate is the proportion of an at-risk population that develops the disease during an outbreak. It is a cumulative incidence over the outbreak period. Comparing attack rates between groups, for example vaccinated and unvaccinated people, points to risk factors and lets you estimate vaccine effectiveness.",
+    "competency": "comp.epidemiological_measures",
+    "parameters": [],
+    "status": "draft"
+  },
+  {
+    "id": "vaccine_efficacy_and_coverage",
+    "title": "Coverage is not the same as immunity",
+    "body": "Coverage is the share of people who received the vaccine; immunity also depends on vaccine efficacy and on the vaccine being potent when given. Some vaccinated people do not respond (primary vaccine failure). A village can therefore report good coverage and still sit below the herd immunity threshold.",
+    "competency": "comp.immunisation",
+    "parameters": [
+      "infectious.vaccine_efficacy",
+      "infectious.initial_coverage_min",
+      "infectious.initial_coverage_max"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "cold_chain",
+    "title": "The cold chain",
+    "body": "Vaccines lose potency if they are not kept within the recommended temperature range from manufacturer to beneficiary. Damage from heat is cumulative and cannot be reversed; a vaccine that has lost potency looks the same in the vial. A broken cold chain therefore produces sessions that look successful on paper but protect fewer children.",
+    "competency": "comp.immunisation",
+    "parameters": [
+      "systems.cold_chain_failure_probability",
+      "systems.cold_chain_potency_loss"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "stock_management",
+    "title": "Vaccine stock and stock-outs",
+    "body": "Vaccine supply is planned from the target population, the session plan, expected wastage and a buffer stock. A stock-out cancels sessions, and families who came for nothing may not return, so its cost is larger than the doses missed. Moving stock between facilities helps one place at the expense of another unless the total is enough.",
+    "competency": "comp.health_management",
+    "parameters": [
+      "systems.resupply_doses_per_1000",
+      "systems.stock_initial_per_1000"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "equity_in_coverage",
+    "title": "Pockets of low coverage",
+    "body": "Average coverage hides differences between places and groups. Outbreaks start and persist in pockets where coverage is low, such as remote hamlets, urban slums or communities that distrust the service. Finding and reaching these pockets usually prevents more disease than raising coverage further where it is already high.",
+    "competency": "comp.immunisation",
+    "parameters": [
+      "infectious.initial_coverage_min",
+      "infectious.initial_coverage_max"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "rumours_and_hesitancy",
+    "title": "Rumours and vaccine hesitancy",
+    "body": "Rumours about vaccines spread quickly where trust in the health system is low, and they travel between neighbouring communities. Hesitant families delay or refuse vaccination, coverage falls, and outbreaks follow some time later. Early, honest communication through people the community already trusts works better than denial after the rumour has spread.",
+    "competency": "comp.health_communication",
+    "parameters": [
+      "systems.rumour_growth_rate",
+      "systems.rumour_surge_threshold"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "aefi_communication",
+    "title": "Adverse events following immunisation",
+    "body": "An adverse event following immunisation (AEFI) is any untoward medical occurrence after vaccination; it does not necessarily have a causal relationship with the vaccine. Each one needs prompt reporting, investigation and clear communication. Silence or delay lets a coincidental event turn into a rumour that harms the programme.",
+    "competency": "comp.health_communication",
+    "parameters": [
+      "systems.aefi_rumour_probability"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "community_trust",
+    "title": "Community trust and participation",
+    "body": "People use services they trust. Trust is built slowly through reliable services, respectful behaviour and involving local leaders, and it is lost quickly through missed sessions, unexplained events or poor communication. Trust affects almost everything else: care seeking, reporting of cases, cooperation with tracing and acceptance of vaccines.",
+    "competency": "comp.health_communication",
+    "parameters": [
+      "systems.trust_recovery_rate",
+      "systems.trust_erosion_per_rumour"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "health_worker_workload",
+    "title": "Workload of health workers",
+    "body": "ASHAs, ANMs and medical officers carry routine services and outbreak response at the same time. When workload exceeds capacity, session quality, reporting and morale all suffer, often just when they are needed most. Extra staff, timely incentives and realistic task lists are public health measures in their own right.",
+    "competency": "comp.health_management",
+    "parameters": [
+      "systems.workload_per_case",
+      "systems.overload_threshold"
+    ],
+    "status": "draft"
+  },
+  {
+    "id": "counterfactual_thinking",
+    "title": "What would have happened otherwise?",
+    "body": "To judge a decision you must compare what happened with what would have happened without it: the counterfactual. In real life the counterfactual cannot be observed, which is why epidemiology relies on comparison groups. In this game the same district is replayed with the same chance events but without your actions, so the difference between the two runs is the effect of your decisions.",
+    "competency": "comp.causal_reasoning",
+    "parameters": [],
+    "status": "draft"
+  }
+]

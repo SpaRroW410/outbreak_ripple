@@ -61,6 +61,7 @@ def state_view(game: Game, feed: Sequence[Event]) -> dict[str, Any]:
             "overloaded": int(peek("systems.overloaded", block.id)) == 1,
         })
     rules = game.content.theme["turn"]
+    hidden = set(game.content.theme.get("feed_hidden_kinds", []))  # the DHO cannot see these
     return {
         "seed": game.seed_text, "turn": game.turn, "turns": game.sim.clock.turns,
         "tick": game.sim.tick, "ticks": game.sim.clock.ticks_per_run, "finished": game.finished,
@@ -78,7 +79,7 @@ def state_view(game: Game, feed: Sequence[Event]) -> dict[str, Any]:
                                   for v in all_villages) / game.sim.district.population, 3),
         },
         "hand": [card.to_dict() for card in game.hand()],
-        "feed": [event_view(event, names) for event in feed],
+        "feed": [event_view(event, names) for event in feed if event.kind not in hidden],
     }
 
 

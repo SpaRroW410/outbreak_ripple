@@ -33,6 +33,8 @@ SYS_SESSION_DOSES = "systems.session_doses"
 SYS_VACCINE_POTENCY = "systems.vaccine_potency"
 SYS_TRUST = "systems.trust"
 SYS_SURVEILLANCE = "systems.surveillance"
+SYS_OVERLOADED = "systems.overloaded"
 
 WRITES = frozenset(ALL_KEYS)
-READS = frozenset({SYS_SESSION_DOSES, SYS_VACCINE_POTENCY, SYS_TRUST, SYS_SURVEILLANCE})
+READS = frozenset({SYS_SESSION_DOSES, SYS_VACCINE_POTENCY, SYS_TRUST, SYS_SURVEILLANCE,
+                   SYS_OVERLOADED})
