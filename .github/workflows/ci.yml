@@ -1,0 +1,30 @@
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dev tools (the engine itself has no dependencies)
+        run: |
+          python -m pip install pytest ruff mypy
+          npm ci
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: make check
+        run: make check
+      - name: Keep the measured numbers
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: reports/
