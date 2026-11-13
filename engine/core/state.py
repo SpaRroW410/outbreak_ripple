@@ -61,6 +61,10 @@ class StateStore:
         """Deep copy of all values, keys and places sorted."""
         return {key: dict(sorted(self._values[key].items())) for key in sorted(self._values)}
 
+    def tainted_cells(self) -> frozenset[tuple[str, str]]:
+        """Cells whose value may have been influenced by a player action."""
+        return frozenset((key, place) for key, cells in self._taint.items() for place in cells)
+
     def totals(self) -> dict[str, float]:
         """Sum over places of every numeric key (used for per-tick metrics)."""
         result: dict[str, float] = {}

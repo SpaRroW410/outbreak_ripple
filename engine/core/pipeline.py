@@ -36,6 +36,7 @@ class RunResult:
     log: EventLog
     final_state: dict[str, dict[str, Scalar]]
     series: dict[str, list[float]]  # key -> total over places, one entry per tick
+    tainted_cells: frozenset[tuple[str, str]]  # (key, place) possibly changed by the player
 
 
 class Simulation:
@@ -109,4 +110,5 @@ class Simulation:
     def result(self) -> RunResult:
         """Snapshot of the run so far."""
         return RunResult(self.seed_text, self.district, self.log, self.state.snapshot(),
-                         {key: list(values) for key, values in self.series.items()})
+                         {key: list(values) for key, values in self.series.items()},
+                         self.state.tainted_cells())
