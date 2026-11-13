@@ -88,7 +88,7 @@ class Simulation:
             if domain_name not in inboxes:
                 raise ValueError(f"scheduled event {item.kind!r} has no domain to receive it")
             event = self.log.append(self.tick, item.kind, item.place_id, item.payload,
-                                    item.causes, domain_name)
+                                    item.causes, domain_name, item.influences)
             inboxes[domain_name].append(event)
         for domain in self.domains:
             ctx = TickContext(self.tick, self.district, self._views[domain.name],

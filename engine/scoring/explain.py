@@ -13,7 +13,12 @@ from engine.scoring.diff import Diff
 
 @dataclass(frozen=True)
 class ChainExplanation:
-    """A cause chain from a player action to an event only the player's run has."""
+    """A path from a player action to an event only the player's run has.
+
+    Only the action, its direct consequences and events the baseline does not
+    have are listed; steps that also happened in the baseline are left out, so
+    neighbours in the list are "led to", not always "directly caused".
+    """
 
     event_ids: tuple[int, ...]  # first is the action, last is the outcome
     concept_id: str  # "" if no concept card matches
@@ -38,17 +43,13 @@ def top_chains(player: RunResult, result: Diff, triggers: Sequence[ConceptTrigge
     """Pick up to `limit` chains ending at the weightiest player-only events.
 
     Chains are chosen greedily by event weight; an outcome already covered by a
-    chosen chain, or of a kind already shown at the same place, is skipped.
+    chosen chain, or of a kind already shown, is skipped. If the player only
+    prevented events there is nothing to chain (the UI lists what was prevented).
     """
     candidates = [player.log.get(event_id) for event_id in result.only_player
                   if player.log.is_tainted(event_id)]
     candidates.sort(key=lambda event: (-kind_weights.get(event.kind, 1.0), event.id))
-    # Fallback when the player mostly prevented things: other events downstream of an action.
     player_only = set(result.only_player)
-    others = [event for event in player.log if player.log.is_tainted(event.id)
-              and event.id not in player_only and event.kind in kind_weights]
-    others.sort(key=lambda event: (-kind_weights[event.kind], event.id))
-    candidates.extend(others)
     chosen: list[ChainExplanation] = []
     covered: set[int] = set()
     seen_kinds: set[str] = set()
@@ -58,7 +59,8 @@ def top_chains(player: RunResult, result: Diff, triggers: Sequence[ConceptTrigge
         if event.id in covered or event.kind in seen_kinds:
             continue
         root = min(player.log.roots(event.id))
-        chain = longest_chain_to(player.log, root, event.id)
+        path = longest_chain_to(player.log, root, event.id, wide=True)
+        chain = [i for i in path if i == root or i == event.id or i in player_only]
         if len(chain) < 2:
             continue
         concept = _concept_for(player, chain, triggers, card_concepts)

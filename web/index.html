@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Outbreak Ripple</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="top">
+    <h1 id="app-title">Outbreak Ripple</h1>
+    <button type="button" id="theme-toggle" class="plain">Switch light / dark</button>
+  </header>
+  <nav id="nav" aria-label="Screens" hidden></nav>
+  <p id="status" role="status" aria-live="polite"></p>
+  <p id="error" role="alert"></p>
+  <main id="screen" tabindex="-1"></main>
+  <footer>
+    <p id="disclaimer"></p>
+    <p id="version"></p>
+  </footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -33,7 +33,7 @@ class RippleScore:
     """reach x depth x surprise."""
 
     reach: int  # places plus domains touched by events only the player's run has
-    depth: int  # longest cause chain from an action to such an event
+    depth: int  # most such events on one path from an action (the action counts as one)
     surprise: float  # 1 - share of noise runs at least as far from typical as this run
     total: float
 
@@ -60,13 +60,19 @@ def public_health_score(result: Diff, weights: Mapping[str, Any]) -> HealthScore
                        round(total, 1))
 
 
-def chain_depths(player: RunResult) -> dict[int, int]:
-    """For each event that descends from an action: length of its longest chain."""
+def chain_depths(player: RunResult, changed: frozenset[int]) -> dict[int, int]:
+    """For each event downstream of an action: the most changed events on a path to it.
+
+    Paths follow causes and influences; only the action itself and events in
+    `changed` (those the baseline does not have) count towards the depth.
+    """
     depth: dict[int, int] = {}
     for event in player.log:
         if not player.log.is_tainted(event.id):
             continue
-        depth[event.id] = 1 + max((depth.get(cause, 0) for cause in event.causes), default=0)
+        own = 1 if event.id in changed or not event.causes else 0
+        before = max((depth.get(i, 0) for i in event.causes + event.influences), default=0)
+        depth[event.id] = own + before
     return depth
 
 
@@ -83,7 +89,7 @@ def surprise(player_cases: int, noise_cases: Sequence[int]) -> float:
 
 def ripple_score(player: RunResult, result: Diff, surprise_value: float) -> RippleScore:
     """Reach, depth and surprise of the player's ripple."""
-    depths = chain_depths(player)
+    depths = chain_depths(player, frozenset(result.only_player))
     places: set[str] = set()
     domains: set[str] = set()
     depth = 0

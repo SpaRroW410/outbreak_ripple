@@ -58,8 +58,8 @@ class ActionContext:
 
     def schedule(self, delay: int, kind: str, place_id: str, payload: Payload) -> None:
         """Queue a delayed effect for a domain, caused by the action."""
-        cause = self.state.scope_taint
-        causes = (self.action_id if cause is None else cause,)
+        latest = self.state.scope_taint  # the action, or the latest event it produced
+        causes = (self.action_id if latest is None else latest,)
         self.schedule_queue.add(ScheduledEvent(self.tick + delay, kind, place_id, dict(payload),
                                                causes))
 

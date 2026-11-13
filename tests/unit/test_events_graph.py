@@ -61,6 +61,20 @@ def test_blast_radius() -> None:
     assert radius.groups == ("under5",)
 
 
+def test_influences_are_kept_apart_from_causes() -> None:
+    log = sample_log()
+    event = log.append(4, "a.six", "V4", {}, [0], "a", influences=[6])
+    assert event.causes == (0,) and event.influences == (6,)
+    assert log.is_tainted(event.id)  # downstream of the action through the influence
+    assert event.id not in descendants(log, 1)  # ...but not caused by it
+    assert event.id in descendants(log, 1, wide=True)
+    assert ancestors(log, event.id) == {0}
+    assert ancestors(log, event.id, wide=True) == {0, 1, 6}
+    assert longest_chain_to(log, 1, event.id) == []
+    assert longest_chain_to(log, 1, event.id, wide=True) == [1, 6, event.id]
+    assert "V4" in blast_radius(log, 1).places
+
+
 def test_digest_changes_with_content() -> None:
     first, second = sample_log(), sample_log()
     assert first.digest() == second.digest()

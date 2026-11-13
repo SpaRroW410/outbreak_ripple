@@ -2,6 +2,10 @@
 
 Contract: read-only functions. Because causes always have lower ids, a single
 pass in id order is a topological order; no recursion is needed.
+
+By default the functions follow `causes` only. With `wide=True` they also
+follow `influences` (see `core/events.py`): use that to ask "what might this
+action have changed?", never to tell the player "this caused that".
 """
 
 from __future__ import annotations
@@ -21,27 +25,35 @@ class BlastRadius:
     domains: tuple[str, ...]
 
 
-def ancestors(log: EventLog, event_id: int) -> set[int]:
+def parents(log: EventLog, event_id: int, wide: bool = False) -> tuple[int, ...]:
+    """Direct causes of an event (plus its influences when `wide`)."""
+    event = log.get(event_id)
+    return event.causes + event.influences if wide else event.causes
+
+
+def ancestors(log: EventLog, event_id: int, wide: bool = False) -> set[int]:
     """All events that `event_id` descends from (not including itself)."""
     found: set[int] = set()
-    stack = list(log.get(event_id).causes)
+    stack = list(parents(log, event_id, wide))
     while stack:
         current = stack.pop()
         if current not in found:
             found.add(current)
-            stack.extend(log.get(current).causes)
+            stack.extend(parents(log, current, wide))
     return found
 
 
-def descendants(log: EventLog, event_id: int) -> set[int]:
+def descendants(log: EventLog, event_id: int, wide: bool = False) -> set[int]:
     """All events caused, directly or indirectly, by `event_id`."""
     found: set[int] = set()
-    stack = list(log.children(event_id))
+    stack = [event_id]
     while stack:
         current = stack.pop()
-        if current not in found:
-            found.add(current)
-            stack.extend(log.children(current))
+        following = log.children(current) + (log.influenced(current) if wide else ())
+        for child in following:
+            if child not in found:
+                found.add(child)
+                stack.append(child)
     return found
 
 
@@ -73,15 +85,17 @@ def chain_to(parents: dict[int, int], from_id: int, end_id: int) -> list[int]:
     return chain
 
 
-def longest_chain_to(log: EventLog, from_id: int, end_id: int) -> list[int]:
-    """Longest cause path from `from_id` to `end_id` ([] if not connected)."""
-    between = (ancestors(log, end_id) | {end_id}) & (descendants(log, from_id) | {from_id})
+def longest_chain_to(log: EventLog, from_id: int, end_id: int,
+                     wide: bool = False) -> list[int]:
+    """Longest path from `from_id` to `end_id` ([] if not connected)."""
+    between = ((ancestors(log, end_id, wide) | {end_id})
+               & (descendants(log, from_id, wide) | {from_id}))
     if from_id not in between or end_id not in between:
         return []
     best_length: dict[int, int] = {from_id: 1}
     best_parent: dict[int, int] = {}
     for current in sorted(between):
-        for cause in log.get(current).causes:
+        for cause in parents(log, current, wide):
             if cause in best_length and best_length[cause] + 1 > best_length.get(current, 0):
                 best_length[current] = best_length[cause] + 1
                 best_parent[current] = cause
@@ -89,8 +103,8 @@ def longest_chain_to(log: EventLog, from_id: int, end_id: int) -> list[int]:
 
 
 def blast_radius(log: EventLog, action_id: int) -> BlastRadius:
-    """Places, groups and domains touched downstream of a player action."""
-    touched = descendants(log, action_id)
+    """Places, groups and domains that a player action caused or may have influenced."""
+    touched = descendants(log, action_id, wide=True)
     places: set[str] = set()
     groups: set[str] = set()
     domains: set[str] = set()

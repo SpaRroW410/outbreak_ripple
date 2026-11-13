@@ -1,0 +1,37 @@
+{
+  "seed": "golden-1",
+  "plays": [
+    [
+      0,
+      "press_note",
+      "D"
+    ],
+    [
+      1,
+      "mop_up_campaign",
+      "B01"
+    ],
+    [
+      2,
+      "contact_tracing",
+      "B01V01"
+    ],
+    [
+      3,
+      "redirect_stock",
+      "B02"
+    ],
+    [
+      4,
+      "community_meeting",
+      "B02V02"
+    ],
+    [
+      5,
+      "school_closure",
+      "B01V02"
+    ]
+  ],
+  "events": 177,
+  "digest": "41a0c9143c8955a254b98ac2a31953d49550e907c51aa71049877bf4eea3b1d3"
+}

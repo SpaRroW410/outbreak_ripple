@@ -17,6 +17,7 @@ from engine.assess.export import build_export
 from engine.content import Content, parse_content
 from engine.game import Game, InvalidPlayError
 from engine.results import Results, compute_results
+from engine.runner import run
 
 
 class Session:
@@ -42,6 +43,9 @@ class Session:
             self.game = Game(self.content, str(args["seed"]))
             self.results = None
             return state_view(self.game, [])
+        if cmd == "benchmark":
+            result = run(self.content, str(args["seed"]), [])
+            return {"events": len(result.log), "digest": result.log.digest()}
         game = self._game()
         if cmd == "get_state":
             return state_view(game, [])

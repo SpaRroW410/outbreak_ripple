@@ -66,8 +66,8 @@ class TickContext:
         """Append an event caused by `causes` (at least one is required)."""
         if not kind.startswith(self.domain + "."):
             raise ValueError(f"domain {self.domain!r} cannot emit {kind!r}")
-        event = self.log.append(self.tick, kind, place_id, payload, self._with_taint(causes),
-                                self.domain)
+        event = self.log.append(self.tick, kind, place_id, payload, causes, self.domain,
+                                self._influences(causes))
         if self.log.is_tainted(event.id):
             self.state.mark(event.id)
         self.emitted.append(event)
@@ -79,16 +79,15 @@ class TickContext:
         if delay < 1:
             raise ValueError("follow-up events must be scheduled for a later tick")
         item = ScheduledEvent(self.tick + delay, kind, place_id, dict(payload),
-                              tuple(self._with_taint(causes)))
+                              tuple(causes), tuple(self._influences(causes)))
         self.schedule_queue.add(item)
 
-    def _with_taint(self, causes: Sequence[int]) -> list[int]:
-        """Add the scope taint as a cause unless a cause is already tainted."""
-        result = list(causes)
+    def _influences(self, causes: Sequence[int]) -> list[int]:
+        """The scope taint as an influence, unless a real cause is already tainted."""
         taint = self.state.scope_taint
-        if taint is not None and not any(self.log.is_tainted(cause) for cause in result):
-            result.append(taint)
-        return result
+        if taint is None or any(self.log.is_tainted(cause) for cause in causes):
+            return []
+        return [taint]
 
 
 class Domain(Protocol):

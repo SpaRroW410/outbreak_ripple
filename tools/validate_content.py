@@ -52,7 +52,8 @@ def check_parameters(bundle: Mapping[str, Any], problems: list[str]) -> None:
     """value, unit, source, status on every parameter; TODO sources stay illustrative."""
     for name, entry in sorted(bundle["parameters"].items()):
         label = f"parameter {name}"
-        fields = {"value": (int, float), "unit": str, "source": str, "status": str}
+        fields: dict[str, type | tuple[type, ...]] = {
+            "value": (int, float), "unit": str, "source": str, "status": str}
         if not _require(entry, fields, label, problems):
             continue
         if isinstance(entry["value"], bool):

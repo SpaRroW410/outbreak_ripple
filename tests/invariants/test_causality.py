@@ -15,7 +15,7 @@ def check_log(seed_text: str) -> dict[str, int]:
     """Count rule violations in the log of one random game."""
     log = played_result(seed_text).log
     missing = sum(1 for e in log if not e.causes and e.kind not in ROOT_KINDS)
-    not_earlier = sum(1 for e in log for cause in e.causes if cause >= e.id)
+    not_earlier = sum(1 for e in log for cause in e.causes + e.influences if cause >= e.id)
     ticks_backwards = sum(1 for e in log for cause in e.causes if log.get(cause).tick > e.tick)
     return {"events": len(log), "missing_cause": missing, "cause_not_earlier": not_earlier,
             "cause_from_the_future": ticks_backwards}
@@ -53,7 +53,7 @@ def test_longest_chain_and_taint_match_brute_force_on_small_worlds() -> None:
             longest_seen = max(longest_seen, len(chain))
         for event in log:
             has_action_ancestor = event.kind == "player.action" or any(
-                log.get(a).kind == "player.action" for a in ancestors(log, event.id))
+                log.get(a).kind == "player.action" for a in ancestors(log, event.id, wide=True))
             assert log.is_tainted(event.id) == has_action_ancestor
         for action in actions:
             assert all(action in ancestors(log, d) for d in descendants(log, action))

@@ -89,7 +89,10 @@ def chain_view(game: Game, event_id: int) -> dict[str, Any]:
     if event_id < 0 or event_id >= len(log):
         raise ValueError(f"no event with id {event_id}")
     names = _place_names(game)
-    wanted = sorted(ancestors(log, event_id) | {event_id}, reverse=True)[:MAX_CHAIN_NODES]
+    family = ancestors(log, event_id) | {event_id}
+    for member in sorted(family):  # influences are shown one step deep, labelled as such
+        family = family | set(log.get(member).influences)
+    wanted = sorted(family, reverse=True)[:MAX_CHAIN_NODES]
     return {"event_id": event_id,
             "nodes": [event_view(log.get(i), names) for i in sorted(wanted)]}
 

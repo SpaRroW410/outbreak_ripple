@@ -21,6 +21,7 @@ class ScheduledEvent:
     place_id: str
     payload: Payload
     causes: tuple[int, ...]
+    influences: tuple[int, ...] = ()
 
 
 class Schedule:

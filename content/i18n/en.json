@@ -52,7 +52,7 @@
  "feed.week": "Week {tick}",
  "feed.why": "Why?",
  "chain.heading": "Chain of causes",
- "chain.intro": "Open an event to see what caused it.",
+ "chain.intro": "Open an event to see what caused it. Grey lines mark weaker links: things that may have shifted the event without directly causing it.",
  "chain.back": "Back",
  "chain.no_cause": "Start of the simulation",
  "results.heading": "Results",
@@ -74,7 +74,7 @@
  "results.trust": "Mean trust",
  "results.outbreaks": "Outbreaks declared",
  "results.stockouts": "Stock-outs",
- "results.chains": "Top chains of cause and effect",
+ "results.chains": "What your actions led to",
  "results.no_chains": "Your actions left no traceable chain this time.",
  "results.prevented": "Prevented (in baseline only)",
  "results.added": "New (in your run only)",
@@ -115,5 +115,7 @@
  "event.actions.mo_transferred": "A medical officer joined {place} block",
  "event.actions.inspection_tightens": "Inspection tightened discipline in {place} block",
  "event.actions.inspection_resented": "Inspection resented in {place} block; staff staying away",
- "event.actions.line_list_completed": "Line list completed in {place}: {cases} pending case(s) reported"
+ "event.actions.line_list_completed": "Line list completed in {place}: {cases} pending case(s) reported",
+ "chain.influence": "May also have been shifted by:",
+ "results.chain_note": "Each list starts with your card. Only events that did not happen in the baseline are shown; steps in between that happened either way are left out."
 }
